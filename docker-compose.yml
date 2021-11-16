@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  main:
+    container_name: yemeksepeti-golang-rest-main
+    build: .
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/go/src/yemeksepeti-golang-rest
+    networks:
+      - yemeksepeti-golang-rest-net
+
+networks:
+  yemeksepeti-golang-rest-net: null
