@@ -7,6 +7,7 @@ import (
 )
 
 func StartServer() {
+	//Initialize key-value http server
 	key_value.Initialize()
 
 	err := http.ListenAndServe(":8080", nil)

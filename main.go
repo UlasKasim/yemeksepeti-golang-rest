@@ -1,24 +1,24 @@
 package main
 
 import (
-	"context"
 	"log"
 	"sync"
 	"yemeksepeti-golang-rest/server"
 )
 
 func main() {
-	context.Background()
-
+	//Initialize a wait group for server
 	var wg sync.WaitGroup
 	wg.Add(1)
 
 	go func() {
+		defer wg.Done()
+
 		log.Println("Starting server")
 
+		//Simply start server
 		server.StartServer()
 
-		wg.Done()
 	}()
 
 	wg.Wait()

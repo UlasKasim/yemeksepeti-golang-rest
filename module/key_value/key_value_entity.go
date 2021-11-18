@@ -1,7 +1,12 @@
 package key_value
 
-import "time"
+import (
+	"encoding/json"
+	"fmt"
+	"time"
+)
 
+//Entity KeyValue entity
 type Entity struct {
 	Key   string `bson:"key" json:"key"`
 	Value string `bson:"value" json:"value"`
@@ -21,4 +26,20 @@ func (e *Entity) BeforeCreate() *Entity {
 func (e *Entity) BeforeUpdate() *Entity {
 	e.UpdatedAt = time.Now()
 	return e
+}
+
+//decodeJson decodes string to KeyValue Entity
+func decodeJson(d string) *Entity {
+	var keyValue Entity
+	json.Unmarshal([]byte(d), &keyValue)
+	return &keyValue
+}
+
+//encodeJson encodes KeyValue Entity to String
+func encodeJson(e Entity) string {
+	data, err := json.Marshal(e)
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+	return string(data[:])
 }
