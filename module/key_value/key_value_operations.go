@@ -55,9 +55,9 @@ func (d *data) flushAll() {
 }
 
 //intervalSave saves KeyValueList to file as Json with interval of seconds parameter
-func (d *data) intervalSave(seconds time.Duration) {
+func (d *data) intervalSave(seconds int) {
 	//Create Ticker for tick of every interval
-	t := time.NewTicker(time.Second * seconds)
+	t := time.NewTicker(time.Second * time.Duration(seconds))
 
 	//Check every tick
 	for range t.C {

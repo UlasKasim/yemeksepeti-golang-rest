@@ -28,15 +28,15 @@ func (e *Entity) BeforeUpdate() *Entity {
 	return e
 }
 
-//decodeJson decodes string to KeyValue Entity
-func decodeJson(d string) *Entity {
+//DecodeJson decodes string to KeyValue Entity
+func DecodeJson(d string) *Entity {
 	var keyValue Entity
 	json.Unmarshal([]byte(d), &keyValue)
 	return &keyValue
 }
 
-//encodeJson encodes KeyValue Entity to String
-func encodeJson(e Entity) string {
+//EncodeJson encodes KeyValue Entity to String
+func EncodeJson(e Entity) string {
 	data, err := json.Marshal(e)
 	if err != nil {
 		fmt.Println("error:", err)

@@ -6,16 +6,15 @@ import (
 	"io"
 	"net/http"
 	"sync"
-	"time"
 )
 
 //Initialize initialize module with endpoints
 //
 //Contains Waitgroup for interval save
 func Initialize() {
-	http.HandleFunc("/set", setKeyHandler)
-	http.HandleFunc("/get/", getKeyHandler)
-	http.HandleFunc("/flush", flushHandler)
+	http.HandleFunc("/set", SetKeyHandler)
+	http.HandleFunc("/get/", GetKeyHandler)
+	http.HandleFunc("/flush", FlushHandler)
 
 	var wg sync.WaitGroup
 	wg.Add(1)
@@ -23,20 +22,20 @@ func Initialize() {
 	go func() {
 		Data.extractDataFromFile()
 
-		Data.intervalSave(60 * time.Second)
+		Data.intervalSave(10)
 
 		wg.Done()
 	}()
 
 }
 
-//Set setting keyValue Entity to InMemory KeyValueList
+//SetKeyHandler setting keyValue Entity to InMemory KeyValueList
 //	POST method listener
 //	Returns StatusMethodNotAllowed if wrong method
 //	Returns StatusBadRequest if invalid json
 //	Returns StatusBadRequest if key exists
 //	Returns StatusOk with written entity
-func setKeyHandler(w http.ResponseWriter, r *http.Request) {
+func SetKeyHandler(w http.ResponseWriter, r *http.Request) {
 	//Check if method is `POST`
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -52,8 +51,7 @@ func setKeyHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Decode Json to Entity
-	keyValue := decodeJson(string(b)).BeforeCreate()
-
+	keyValue := DecodeJson(string(b)).BeforeCreate()
 	//Getting Entity from KeyValueList with key parameter
 	existed := Data.getValue(keyValue.Key)
 	if existed != nil {
@@ -69,13 +67,13 @@ func setKeyHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(keyValue)
 }
 
-//Get getting keyValue Entity from key parameter
+//GetKeyHandler getting keyValue Entity from key parameter
 //	GET method listener
 //	Returns StatusMethodNotAllowed if wrong method
 //	Returns StatusBadRequest if wrong url or key parameter
 //	Returns StatusNoContent if key doesnt exits
 //	Returns StatusOk with found entity
-func getKeyHandler(w http.ResponseWriter, r *http.Request) {
+func GetKeyHandler(w http.ResponseWriter, r *http.Request) {
 	//Check if method is `GET`
 	if r.Method != http.MethodGet {
 		err := "Wrong method has arrived"
@@ -111,7 +109,11 @@ func getKeyHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(keyValue)
 }
 
-func flushHandler(w http.ResponseWriter, r *http.Request) {
+//FlushHandler flushes all data from KeyValueList
+// DELETE method listener
+// Returns StatusMethodNotAllowed if wrong method
+// Returns StatusOk with success message
+func FlushHandler(w http.ResponseWriter, r *http.Request) {
 	//Check if method is `DELETE`
 	if r.Method != http.MethodDelete {
 		w.WriteHeader(http.StatusMethodNotAllowed)
