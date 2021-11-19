@@ -9,6 +9,7 @@
     - [Set Key](#set-key)
     - [Get Key](#get-key)
     - [Flush Keys](#flush-keys)
+- [License](#license)
 
 # HomeWork
 
@@ -77,6 +78,11 @@ Example json data
 }
 ```
 
+Result of `/set`
+```json
+{"key":"foo","value":"bar","CreatedAt":"2021-11-17T21:31:21.6085805Z","UpdatedAt":"2021-11-17T21:31:21.6085806Z"}
+```
+
 ### Get Key
 Gets data from parameter key with `GET` request, endpoint is `/get/{key-id}`
 
@@ -88,3 +94,31 @@ Result of `/get/foo`
 
 Flush all data with `DELETE` request, endpoint is `/flush`
 
+Result of `/flush`
+```sh
+Succesfully flushed all data
+```
+
+# License
+
+MIT License
+
+Copyright (c) 2021 Ulaş Kasım
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
